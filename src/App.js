@@ -1,25 +1,45 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import Header from './Components/Header';
+import PlayArea from './Components/PlayArea';
+import Stars  from './Containers/Stars';
 
 class App extends Component {
+  state = {
+    count: 5
+  };
+  decrement = () => {
+    this.setState(state => ({
+      count: this.state.count - 1
+    }));
+  };
+
+  displayYouLose = () => {
+    const count = this.state.count;
+    if (count === 0) {
+      return (
+        <div className="win">
+          <h2>You Lose</h2>
+        </div>
+      );
+    }
+  };
+
+  componentDidUpdate = (prevState) => {
+    if(this.state.count !== prevState.count){
+      {Stars()}
+
+    }
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <Header count={this.state.count} displayYouLose={this.displayYouLose}/>
+        <PlayArea
+          decrement={this.decrement}
+          
+        />
       </div>
     );
   }
